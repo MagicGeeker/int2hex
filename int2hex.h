@@ -2,12 +2,14 @@
 #ifndef _INT_TO_HEX_H_
 #define _INT_TO_HEX_H_
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-inline void uint32tohex(char dst[8], uint32_t val)
+inline static void uint32tohex(char dst[8], uint32_t val)
 {
 	// clang-format off
 	const uint16_t* const mm = (const uint16_t* const)
@@ -26,14 +28,14 @@ inline void uint32tohex(char dst[8], uint32_t val)
 	p[2] = mm[(val & 0x0000FF00) >> 8];
 	p[3] = mm[val & 0xFF];
 }
-inline void uint32tohex_tail(char dst[9], uint32_t val)
+inline static void uint32tohex_tail(char dst[9], uint32_t val)
 {
 	uint32tohex(dst, val);
 	dst[8] = '\0';
 }
 
 
-inline void int32tohex(char dst[9], int32_t val)
+inline static void int32tohex(char dst[9], int32_t val)
 {
 	if (val < 0)
 	{
@@ -44,7 +46,7 @@ inline void int32tohex(char dst[9], int32_t val)
 		uint32tohex(dst, val);
 	}
 }
-inline void int32tohex_tail(char dst[10], int32_t val)
+inline static void int32tohex_tail(char dst[10], int32_t val)
 {
 	if (val < 0)
 	{
@@ -59,19 +61,19 @@ inline void int32tohex_tail(char dst[10], int32_t val)
 }
 
 
-inline void uint64tohex(char dst[16], uint64_t val)
+inline static void uint64tohex(char dst[16], uint64_t val)
 {
 	uint32tohex(dst, (uint32_t)(val >> 32ULL));
 	uint32tohex(dst + 8, (uint32_t)val);
 }
-inline void uint64tohex_tail(char dst[17], uint64_t val)
+inline static void uint64tohex_tail(char dst[17], uint64_t val)
 {
 	uint64tohex(dst, val);
 	dst[16] = '\0';
 }
 
 
-inline void int64tohex(char dst[17], int64_t val)
+inline static void int64tohex(char dst[17], int64_t val)
 {
 	if (val < 0)
 	{
@@ -82,7 +84,7 @@ inline void int64tohex(char dst[17], int64_t val)
 		uint64tohex(dst, val);
 	}
 }
-inline void int64tohex_tail(char dst[18], int64_t val)
+inline static void int64tohex_tail(char dst[18], int64_t val)
 {
 	if (val < 0)
 	{
